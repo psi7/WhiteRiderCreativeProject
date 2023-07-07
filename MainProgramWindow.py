@@ -34,7 +34,7 @@ layout3 = [[sg.Text('Enter a new Virus Data to the Application:', size=(45, 1), 
 
 # ----------- Create actual layout using Columns and a row of Buttons
 layout = [[sg.Column(layout1, key='-COL1-'), sg.Column(layout2, visible=False, key='-COL2-'), sg.Column(layout3, visible=False, key='-COL3-')],
-          [sg.Submit('Choose Virus', key='-MainButton-'), sg.Button('1'), sg.Button('2'), sg.Button('3'), sg.Button('Exit')]]
+          [sg.Submit('Choose Virus', key='-MainButton-'), sg.Button('1', auto_size_button=True), sg.Button('2', auto_size_button=True), sg.Button('3', auto_size_button=True), sg.Button('Exit', auto_size_button=True)]]
 
 window = sg.Window('Virus Simulation Application', layout)
 
@@ -49,17 +49,25 @@ while True:
         if layout == 1:
             layout += 1
             window[f'-COL{layout}-'].update(visible=True)
-            window['-MainButton-'].update('Choose Virus')
+            window['-MainButton-'].update('Begin Simulation')
         elif layout == 2:
             layout = 1
             window[f'-COL{layout+1}-'].update(visible=False)
             window[f'-COL{layout}-'].update(visible=True)
-            window['-MainButton-'].update('Begin Simulation')
+            window['-MainButton-'].update('Choose Virus')
     elif event in '123':
         window[f'-COL{layout}-'].update(visible=False)
         layout = int(event)
         window[f'-COL{layout}-'].update(visible=True)
         if layout == 3:
             window['-MainButton-'].update(visible=False)
+        else:
+            if event in '1':
+                window['-MainButton-'].update('Choose Virus',
+                                              visible=True)
+            elif event in '2':
+                window['-MainButton-'].update('Begin Simulation',
+                                              visible=True)
+
 
 window.close()
