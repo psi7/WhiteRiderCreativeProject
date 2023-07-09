@@ -1,7 +1,8 @@
 #This file implements the main functions of the program
 from Bio import SeqIO
-inputfile="./media\HIVDNA.fasta"
-def translate(seq):
+from Bio.Seq import reverse_complement, transcribe, back_transcribe, translate
+inputfile="media\HPVDNA.fasta"
+def Mtranslate(seq):
      
     table = {
         'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
@@ -37,12 +38,17 @@ def read_seq(inputfile):
 
 def readSeqBio(inputfile):
     for seq_record in SeqIO.parse(inputfile,"fasta"):
-        print(seq_record.id)
-        print(repr(seq_record.seq))
-        print(len(seq_record))
+        # print(seq_record.id)
+        print(repr(seq_record.seq),len(repr(seq_record.seq)))
+        # print(len(seq_record))
+        return repr(seq_record.seq)
 
 
-# dna=read_seq(inputfile)
+dna=readSeqBio(inputfile)
+dna=str(dna)
+dna=dna[1:]
 # protein=translate(dna[20:935])
-readSeqBio(inputfile)
+# Mtranslate(dna[1:])
+translate(dna)
+print(transcribe(dna))
 
