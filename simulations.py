@@ -4,7 +4,7 @@ from Bio.Seq import reverse_complement, transcribe, back_transcribe, translate
 from Bio.SeqUtils import seq3
 
 
-inputfile = "media\HPVDNA.fasta"
+# inputfile = "media\HPVDNA.fasta"
 
 # this is for non fasta raw txt files that contain special hidden characters like /r or /n
 
@@ -28,8 +28,8 @@ def readSeqBio(inputfile):
 # Transcibres Dna Sequence to Rna and then computes the sequence of protein
 
 
-def Mtranslate():
-    dna = readSeqBio(inputfile)
+def Mtranslate(ifile):
+    dna = readSeqBio(ifile)
     dna = str(dna).upper()
     dna = ''.join([base for base in dna if base in 'ATCG'])
     rna = transcribe(dna)
@@ -39,4 +39,4 @@ def Mtranslate():
     print(transcribe(dna))
 
 
-Mtranslate()
+# Mtranslate()
