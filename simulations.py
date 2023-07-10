@@ -1,34 +1,14 @@
-#This file implements the main functions of the program
+# This file implements the main functions of the program
 from Bio import SeqIO
 from Bio.Seq import reverse_complement, transcribe, back_transcribe, translate
-inputfile="media\HPVDNA.fasta"
-def Mtranslate(seq):
-     
-    table = {
-        'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
-        'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
-        'AAC':'N', 'AAT':'N', 'AAA':'K', 'AAG':'K',
-        'AGC':'S', 'AGT':'S', 'AGA':'R', 'AGG':'R',                
-        'CTA':'L', 'CTC':'L', 'CTG':'L', 'CTT':'L',
-        'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCT':'P',
-        'CAC':'H', 'CAT':'H', 'CAA':'Q', 'CAG':'Q',
-        'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGT':'R',
-        'GTA':'V', 'GTC':'V', 'GTG':'V', 'GTT':'V',
-        'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCT':'A',
-        'GAC':'D', 'GAT':'D', 'GAA':'E', 'GAG':'E',
-        'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGT':'G',
-        'TCA':'S', 'TCC':'S', 'TCG':'S', 'TCT':'S',
-        'TTC':'F', 'TTT':'F', 'TTA':'L', 'TTG':'L',
-        'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
-        'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W',
-    }
-    protein =""
-    if len(seq)%3 == 0:
-        for i in range(0, len(seq), 3):
-            codon = seq[i:i + 3]
-            protein+= table[codon]
-    return protein
-#  Format and transforms the initial fasta and txt files in order to be readable and ready to be processed by other functions.
+from Bio.SeqUtils import seq3
+
+
+inputfile = "media\HPVDNA.fasta"
+
+# this is for non fasta raw txt files that contain special hidden characters like /r or /n
+
+
 def read_seq(inputfile):
     with open(inputfile, "r") as f:
         seq = f.read()
@@ -36,19 +16,27 @@ def read_seq(inputfile):
     seq = seq.replace("\r", "")
     return seq
 
+# Reads Dna-Rna sequence of virus from Fasta files
+
+
 def readSeqBio(inputfile):
-    for seq_record in SeqIO.parse(inputfile,"fasta"):
+    for seq_record in SeqIO.parse(inputfile, "fasta"):
         # print(seq_record.id)
-        print(repr(seq_record.seq),len(repr(seq_record.seq)))
+        print(repr(seq_record.seq), len(repr(seq_record.seq)))
         # print(len(seq_record))
         return repr(seq_record.seq)
+# Transcibres Dna Sequence to Rna and then computes the sequence of protein
 
 
-dna=readSeqBio(inputfile)
-dna=str(dna)
-dna=dna[1:]
-# protein=translate(dna[20:935])
-# Mtranslate(dna[1:])
-translate(dna)
-print(transcribe(dna))
+def Mtranslate():
+    dna = readSeqBio(inputfile)
+    dna = str(dna).upper()
+    dna = ''.join([base for base in dna if base in 'ATCG'])
+    rna = transcribe(dna)
+    protein = translate(rna, table=1, stop_symbol='*', to_stop=True)
+    protein_3letter = seq3(protein)
+    print(protein_3letter)
+    print(transcribe(dna))
 
+
+Mtranslate()
