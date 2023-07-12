@@ -54,6 +54,8 @@ while True:
             elif values['-Sim3-']:
                 Soption = functions[2]
             print(Soption)
+            if Soption == functions[1] and event == '-MainButton-':
+                    simulations.mutation()
             if Soption == functions[2] and event == '-MainButton-':
                 if option == Virus[0]:
                     simulations.Mtranslate(ifile="media\HPVDNA.fasta")
