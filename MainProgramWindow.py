@@ -28,7 +28,7 @@ layout = [[sg.Column(layout1, key='-COL1-'), sg.Column(layout2, visible=False, k
           [sg.Submit('Choose Virus', key='-MainButton-'), sg.Button('1', auto_size_button=True), sg.Button('2', auto_size_button=True), sg.Button('3', auto_size_button=True), sg.Button('Exit', auto_size_button=True)]]
 
 window = sg.Window('Virus Simulation Application', layout, element_justification='center', element_padding=(5, 5), resizable=True, default_element_size=(
-    40, 5), icon=icon)
+    40, 5), icon=icon,finalize=True)
 
 layout = 1  # The currently visible layout
 while True:
