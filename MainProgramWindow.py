@@ -16,6 +16,7 @@ Virusd = {
 ifile = "media\HPVDNA.fasta"  # Initialize the input file path
 # Theme Color for the Gui Application
 sg.theme('Dark')
+# ----------- The following code Creates the 3 layouts this Window will display -----------
 layout1 = [[sg.Text('Welcome to Virus Simulation App!!', size=(45, 1), font=(16), background_color='white', text_color='black', justification='center', relief=sg.RELIEF_RAISED, enable_events=True)],
            *[[sg.Radio(f' {Virus[i]}', 1, key=f'-VirusB{i+1}-', auto_size_text=True)] for i, virus in enumerate(Virusd.keys())]]
 
