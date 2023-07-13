@@ -30,9 +30,53 @@ def readSeqBio(inputfile):
         print(repr(seq_record.seq), len(repr(seq_record.seq)))
         # print(len(seq_record))
         return repr(seq_record.seq)
-# Transcibres Dna Sequence to Rna and then computes the sequence of protein
 
+#emulates the replication process of retroviruses
+def RetInfection(seq1):
+    #creating retrovirus Mrna leading to proviral DNA
+    virusdna = readSeqBio(seq1)
+    virusdna = str(virusdna).upper()
+    virusdna = ''.join([base for base in virusdna if base in 'ATCG'])
+    virusrna = transcribe(virusdna)
+    virusdna=reverse_complement(virusdna)
+    #reading original Human T-Cell DNA
+    humancelldna = readSeqBio('media\CD4DNA.fasta')
+    humancelldna=str(humancelldna).upper()
+    humancelldna=''.join([base for base in humancelldna if base in 'ATCG'])
+    #Pseudo random sequence of Virus DNA
+    start=random.randint(0,len(virusdna)-5)
+    finish=random.randint(start,len(virusdna))
+    print(humancelldna)
+    print(virusdna)
+    modifiedcelldna = humancelldna+virusdna[start:finish]
+    print(modifiedcelldna)
+    modifiedcelldna=list(modifiedcelldna)
+    random.shuffle(modifiedcelldna)
+    modifiedcelldna="".join(modifiedcelldna)
+    #creating modified by virus cell mrna
+    modifiedcellmrna = transcribe(modifiedcelldna)
+    print(modifiedcelldna)
+    print(modifiedcellmrna)
+    logwindow = sg.Multiline(size=(70, 20), font=('Courier bold', 12),text_color="white",auto_size_text=True)
+    lprint = logwindow.print
+    layout = [[logwindow]]
+    # Create the window that prints the protein sequence
+    window = sg.Window("Protein Transcription", layout, finalize=True,resizable=True)
+    event, values = window.read(timeout=1)
+    lprint("Virus DNA Sequence: \n")
+    lprint(virusdna)
+    lprint("Virus MRNA sequence: \n")
+    lprint(virusrna)
+    lprint("Human T-Cell DNA sequence: \n")
+    lprint(humancelldna)
+    lprint("Modified DNA sequence: \n")
+    lprint(virusrna)
+    lprint("Modified MRNA sequence: \n")
+    lprint(humancelldna)
+    if event == sg.WIN_CLOSED:
+        window.close()
 
+ # Transcibres Dna Sequence to Rna and then computes the sequence of protein
 def Mtranslate(ifile):
     dna = readSeqBio(ifile)
     dna = str(dna).upper()
@@ -136,3 +180,4 @@ def mutation():
 
 # Mtranslate()
 # mutation()
+# RetInfection('media\HTLV2DNA.fasta')

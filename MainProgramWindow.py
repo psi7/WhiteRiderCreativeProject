@@ -54,6 +54,17 @@ while True:
             elif values['-Sim3-']:
                 Soption = functions[2]
             print(Soption)
+            if Soption == functions[0] and event == '-MainButton-':
+                if option == Virus[0]:
+                    simulations.RetInfection(seq1="media\HPVDNA.fasta")
+                elif option == Virus[1]:
+                    simulations.RetInfection(seq1="media\HIVDNA.fasta")
+                elif option == Virus[2]:
+                    simulations.RetInfection(seq1="media\HTLV1DNA.fasta")
+                elif option == Virus[3]:
+                    simulations.RetInfection(seq1="media\HTLV2DNA.fasta")
+                else:
+                    print("ERROR: Something unexpected happened!!")
             if Soption == functions[1] and event == '-MainButton-':
                     simulations.mutation()
             if Soption == functions[2] and event == '-MainButton-':
