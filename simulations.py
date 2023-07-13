@@ -9,7 +9,7 @@ import PySimpleGUI as sg
 
 
 
-# inputfile = "media\HPVDNA.fasta"
+
 
 # this is for non fasta raw txt files that contain special hidden characters like /r or /n
 
@@ -22,8 +22,6 @@ def read_seq(inputfile):
     return seq
 
 # Reads Dna-Rna sequence of virus from Fasta files
-
-
 def readSeqBio(inputfile):
     for seq_record in SeqIO.parse(inputfile, "fasta"):
         # print(seq_record.id)
@@ -178,6 +176,3 @@ def mutation():
     plt.show()
 
 
-# Mtranslate()
-# mutation()
-# RetInfection('media\HTLV2DNA.fasta')

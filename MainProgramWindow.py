@@ -7,11 +7,17 @@ Virus = ['Human Papillomavirus (HPV)', 'Human Immunodeficiency Virus (HIV)',
          'Human T-lymphotropic Virus 1 (HTLV-1)', 'Human T-lymphotropic Virus 2 (HTLV-2)']
 functions = ['Retrovirus Infection Simulation',
              'Virus DNA Mutation', 'Virus Protein Transcription']
+Virusd = {
+    'Human Papillomavirus (HPV)': 0.8,
+    'Human Immunodeficiency Virus (HIV)': 0.4,
+    'Helicobacter pylori': 5,
+    'Epstein-Barr Virus (EBV)': 3
+}
 ifile = "media\HPVDNA.fasta"  # Initialize the input file path
 # Theme Color for the Gui Application
 sg.theme('Dark')
 layout1 = [[sg.Text('Welcome to Virus Simulation App!!', size=(45, 1), font=(16), background_color='white', text_color='black', justification='center', relief=sg.RELIEF_RAISED, enable_events=True)],
-           *[[sg.Radio(f' {Virus[i]}', 1, key=f'-VirusB{i+1}-', auto_size_text=True)] for i in range(len(Virus))]]
+           *[[sg.Radio(f' {Virus[i]}', 1, key=f'-VirusB{i+1}-', auto_size_text=True)] for i, virus in enumerate(Virusd.keys())]]
 
 layout2 = [[sg.Text('Pick a virus simulation form the list to Begin.', size=(45, 1), font=(16), background_color='white', text_color='black', justification='center', relief=sg.RELIEF_RAISED, enable_events=True)],
            *[[sg.Radio(f' {functions[i]}', 2, key=f'-Sim{i+1}-', auto_size_text=True)] for i in range(len(functions))]]
@@ -93,6 +99,30 @@ while True:
         window[f'-COL{layout}-'].update(visible=True)
         if layout == 3:
             window['-MainButton-'].update(visible=False)
+            
+            if event == '-SubmitVName-':
+                virus_name = values['-IN-']
+                if virus_name.isalpha()==True:
+                    if virus_name in Virusd:
+                        sg.popup('Virus already exists in the virus List! Please enter a new virus.')
+                    else:
+                        Virus[virus_name]=''
+                        sg.popup(f'Virus "{virus_name}" added successfully to virus list !!')
+                else:
+                    sg.popup("Please enter a valid string format virus name !! :")
+            elif event=='SubmitVMR-':
+                    virus_name = values['-IN-']
+                    virusMutationRate = values['-IN2-']
+                    if virus_name.isalpha() and virusMutationRate.isdigit:
+                        if virus_name in Virusd:
+                            sg.popup('Virus already exists in the virus List! Please enter a new virus.')
+                        else:
+                            Virusd[virus_name]=virusMutationRate
+                            sg.popup(f'Virus "{virus_name}" and {virusMutationRate} added successfully to virus list !!')
+                            window[f'-VirusB{len(Virus)}-'].update(f' {virus_name}', value=True)
+                    else:
+                        sg.popup("Please enter a valid string format virus name !! :")
+                    
         else:
             if event in '1':
                 window['-MainButton-'].update('Choose Virus',
