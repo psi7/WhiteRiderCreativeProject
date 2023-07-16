@@ -55,9 +55,9 @@ def RetInfection(seq1):
     modifiedcellmrna = transcribe(modifiedcelldna)
     print(modifiedcelldna)
     print(modifiedcellmrna)
-    logwindow = sg.Multiline(size=(70, 20), font=('Courier bold', 12),text_color="white",auto_size_text=True)
-    lprint = logwindow.print
-    layout = [[logwindow]]
+    dnawindow = sg.Multiline(size=(70, 20), font=('Courier bold', 12),text_color="white",auto_size_text=True)
+    lprint = dnawindow.print
+    layout = [[dnawindow]]
     # Create the window that prints the protein sequence
     window = sg.Window("Protein Transcription", layout, finalize=True,resizable=True)
     event, values = window.read(timeout=1)
